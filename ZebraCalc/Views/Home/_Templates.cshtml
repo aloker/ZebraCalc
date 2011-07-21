@@ -1,0 +1,88 @@
+﻿@model string
+@using System.Globalization
+<a href="" id="toggleTmpl@(Model)" class="toggleLink" >Toggle templates</a>
+<div class="tmplCont"  id="tmpl@(Model)" >
+<ul class="tmpl">
+@foreach(var v in new[]{
+    new {v=1.0/1, t="1/1" },
+    new {v=2.0/1, t="2/1" },
+}){
+<li><a href="" class="tmpl@(Model)">@v.t<input type="hidden" value="@v.v.ToString(CultureInfo.InvariantCulture)" /></a></li>
+}
+</ul>
+<ul class="tmpl">
+@foreach(var v in new[]{
+    new {v=1.0/2, t="1/2" },
+    new {v=3.0/2, t="3/2" }
+}){
+<li><a href="" class="tmpl@(Model)">@v.t<input type="hidden" value="@v.v.ToString(CultureInfo.InvariantCulture)" /></a></li>
+}
+</ul>
+
+<ul class="tmpl">
+@foreach(var v in new[]{
+    new {v=1.0/3, t="1/3" },
+    new {v=2.0/3, t="2/3" },
+    new {v=4.0/3, t="4/3" },
+    new {v=5.0/3, t="5/3" }
+}){
+<li><a href="" class="tmpl@(Model)">@v.t<input type="hidden" value="@v.v.ToString(CultureInfo.InvariantCulture)" /></a></li>
+}
+</ul>           
+<ul class="tmpl">
+@foreach(var v in new[]{
+    new {v=1.0/4, t="1/4" },
+    new {v=2.0/4, t="2/4" },
+    new {v=3.0/4, t="3/4" },
+    new {v=5.0/4, t="5/4" },
+    new {v=6.0/4, t="6/4" },
+    new {v=7.0/4, t="7/4" },
+}){
+<li><a href="" class="tmpl@(Model)">@v.t<input type="hidden" value="@v.v.ToString(CultureInfo.InvariantCulture)" /></a></li>
+}
+</ul>
+
+
+
+<ul class="tmpl">
+@foreach(var v in new[]{
+    new {v=1.0/5, t="1/5" },
+    new {v=2.0/5, t="2/5" },
+    new {v=3.0/5, t="3/5" },
+    new {v=4.0/5, t="4/5" },
+    new {v=6.0/5, t="6/5" },
+    new {v=7.0/5, t="7/5" },
+    new {v=8.0/5, t="8/5" },
+    new {v=9.0/5, t="9/5" }
+}){
+<li><a href="" class="tmpl@(Model)">@v.t<input type="hidden" value="@v.v.ToString(CultureInfo.InvariantCulture)" /></a></li>
+}
+</ul>
+<ul class="tmpl">
+@foreach(var v in new[]{
+    new {v=1.0/6, t="1/6" },
+    new {v=5.0/6, t="5/6" },
+    new {v=7.0/6, t="7/6" },
+    new {v=11.0/6, t="11/6" }
+}){
+<li><a href="" class="tmpl@(Model)">@v.t<input type="hidden" value="@v.v.ToString(CultureInfo.InvariantCulture)" /></a></li>
+}
+</ul>
+
+
+<ul class="tmpl">
+@foreach(var v in new[]{
+    new {v=1.0/8, t="1/8" },
+    new {v=3.0/8, t="3/8" },
+    new {v=5.0/8, t="5/8" },
+    new {v=7.0/8, t="7/8" },
+    new {v=9.0/8, t="9/8" },
+    new {v=11.0/8, t="11/8" },
+    new {v=13.0/8, t="13/8" },
+    new {v=15.0/8, t="15/8" },
+}){
+<li><a href="" class="tmpl@(Model)">@v.t<input type="hidden" value="@v.v.ToString(CultureInfo.InvariantCulture)" /></a></li>
+}
+</ul>
+
+</div>
