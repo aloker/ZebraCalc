@@ -12,11 +12,12 @@
     <div id="freqSlider" class="myslider">
     </div>
     <div>
-        <label for="knobValue">Speed scaling factor</label><input type='text' id="freqValue" />
+        <p><label for="togglePerc">Use percentages</label><input type="checkbox" id="togglePerc"/></p>
+        <label for="knobValue">Speed scaling factor</label><input type='text' id="freqValue" /><span id="freqInfo">x</span>
         @Html.Partial("_Templates", "S")
     </div>
     <div style="clear: both;">
-        <label for="knobValue">Duration scaling factor</label><input type='text' id="durValue" />
+        <label for="knobValue">Duration scaling factor</label><input type='text' id="durValue" /><span id="durInfo">x</span>
         @Html.Partial("_Templates", "D")
     </div>
 </div>
@@ -50,7 +51,8 @@
     var model = {
         knob: 100.0,
         speed: 1.0,
-        duration: 1.0
+        duration: 1.0,
+        uiScale: 1.0
     };
 
     function round(value) {
@@ -63,8 +65,8 @@
         $("#knobSlider").slider('option', 'value', model.knob * SLIDER_SCALE);
         $("#freqSlider").slider('option', 'value', model.speed * SLIDER_SCALE);
         $("#knobValue").val(round(model.knob));
-        $("#freqValue").val(round(model.speed));
-        $("#durValue").val(round(model.duration));
+        $("#freqValue").val(round(model.speed * model.uiScale));
+        $("#durValue").val(round(model.duration * model.uiScale));
     }
 
     function updateFromKnob(value) {
@@ -99,13 +101,19 @@
             $(id).select().focus();
             return NaN;
         }
-        return parsed;
+        return parsed / model.uiScale;
     }
 
     function getTemplateValue(link) {
         return $(link).children("input").val();
     }
     $(function () {
+        $("#togglePerc").change(function (e) {
+            var checked = $(this).is(":checked");
+            model.uiScale = checked ? 100.0 : 1.0;            
+            $("#durInfo, #freqInfo").html(checked?'%':'x');            
+            updateGui();
+        });
 
         $(".tmplD").click(function (e) {
             e.preventDefault();

@@ -5,7 +5,7 @@
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css"
         rel="stylesheet" type="text/css" />
     <style type="text/css">
-        body{font:.85em verdana,helvetica,sans-serif;background:#fff;color:#232323}a:visited,a:link,a:active,a{color:#c44}a:hover{color:#f44}.myslider{margin:10px 0}input[type="text"]{width:100px}label,.tmplCont{clear:both}label{display:block;width:12em;text-align:right;margin:0 0.4em}.col,label,.tmpl{float:left}.col{width:47%;margin:0 1%}dt{font-style:italic}dd{margin-bottom:1em}.footnotes,.tmplCont,.credits,.toggleLink{font-size:80%}.tmplCont{display:none;margin-left:20px}.tmpl{list-style-type:none;margin:10px}.tmpl,.tmpl li{padding:0}.tmpl li{margin:0}
+        body{font:.85em verdana,helvetica,sans-serif;background:#fff;color:#232323}a:visited,a:link,a:active,a{color:#c44}a:hover{color:#f44}.myslider{margin:10px 0}input[type="text"]{width:5em;text-align:right}label,.tmplCont{clear:both}label{display:block;width:12em;text-align:right;margin:0 0.4em}.col,label,.tmpl{float:left}.col{width:47%;margin:0 1%}dt{font-style:italic}dd{margin-bottom:1em}.footnotes,.tmplCont,.credits,.toggleLink{font-size:80%}.tmplCont{display:none;margin-left:20px}.tmpl{list-style-type:none;margin:10px}.tmpl,.tmpl li{padding:0}.tmpl li{margin:0}
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
@@ -20,7 +20,8 @@
     <div id="freqSlider" class="myslider">
     </div>
     <div>
-        <label for="knobValue">Speed scaling factor</label><input type='text' id="freqValue" />
+        <p><label for="togglePerc">Use percentages</label><input type="checkbox" id="togglePerc"/></p>
+        <label for="knobValue">Speed scaling factor</label><input type='text' id="freqValue" /><span id="freqInfo">x</span>
         <a href="" id="toggleTmplS" class="toggleLink" >Toggle templates</a>
 <div class="tmplCont"  id="tmplS" >
 <ul class="tmpl">
@@ -68,7 +69,7 @@
 
     </div>
     <div style="clear: both;">
-        <label for="knobValue">Duration scaling factor</label><input type='text' id="durValue" />
+        <label for="knobValue">Duration scaling factor</label><input type='text' id="durValue" /><span id="durInfo">x</span>
         <a href="" id="toggleTmplD" class="toggleLink" >Toggle templates</a>
 <div class="tmplCont"  id="tmplD" >
 <ul class="tmpl">
@@ -236,7 +237,8 @@
     var model = {
         knob: 100.0,
         speed: 1.0,
-        duration: 1.0
+        duration: 1.0,
+        uiScale: 1.0
     };
 
     function round(value) {
@@ -249,8 +251,8 @@
         $("#knobSlider").slider('option', 'value', model.knob * SLIDER_SCALE);
         $("#freqSlider").slider('option', 'value', model.speed * SLIDER_SCALE);
         $("#knobValue").val(round(model.knob));
-        $("#freqValue").val(round(model.speed));
-        $("#durValue").val(round(model.duration));
+        $("#freqValue").val(round(model.speed * model.uiScale));
+        $("#durValue").val(round(model.duration * model.uiScale));
     }
 
     function updateFromKnob(value) {
@@ -285,13 +287,19 @@
             $(id).select().focus();
             return NaN;
         }
-        return parsed;
+        return parsed / model.uiScale;
     }
 
     function getTemplateValue(link) {
         return $(link).children("input").val();
     }
     $(function () {
+        $("#togglePerc").change(function (e) {
+            var checked = $(this).is(":checked");
+            model.uiScale = checked ? 100.0 : 1.0;            
+            $("#durInfo, #freqInfo").html(checked?'%':'x');            
+            updateGui();
+        });
 
         $(".tmplD").click(function (e) {
             e.preventDefault();
