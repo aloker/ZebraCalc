@@ -1,0 +1,9 @@
+﻿@using System.Globalization
+<ul class="tmpl">
+@{
+    var items = (dynamic[])Model.Items;
+}
+@foreach(var v in items){
+<li><a href="" class="tmpl@(Model.Suffix)">@v.t<input type="hidden" value="@v.v.ToString(CultureInfo.InvariantCulture)" /></a></li>
+}
+</ul>

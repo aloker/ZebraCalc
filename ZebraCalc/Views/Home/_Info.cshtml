@@ -1,0 +1,90 @@
+﻿<h2>
+    Manual</h2>
+<p>
+    This tool calculates how the "Rate" knob found on the LFOs and global LFOs affects
+    the frequency/duration<sup><a href="#foot-1">[1]</a></sup> of the LFO cycles in
+    U-HE's magnificent <a href="http://www.u-he.com/cms/zebra">Zebra</a> software synthesizer.
+    The idea came to me when I read <a href="http://www.kvraudio.com/forum/viewtopic.php?t=318470">
+        this thread at kvraudio.com</a>.
+</p>
+<p>
+    Note: the Rate knob scales the speed of the LFO relative to the value set for the
+    "Sync" parameter. E.g. if you set the "Sync" value to 10s (10 seconds), a Rate value
+    of 100 - the neutral setting - means that one cycle of the LFO takes 10 seconds.
+    A Rate value of 200 (the maximum, which is a speed scaling factor of 8.0) will cause
+    the LFO to run 8 times faster (that is, each cycle takes only 1.25 seconds). A Rate
+    value of 50 corresponds to a speed scaling factor of 0.125, ie. each cycles takes
+    eight times as long (80 seconds).</p>
+<p>
+    Basically, this tool answers three questions:</p>
+<dl>
+    <dt>What is the speed/duration scaling factor for a given knob value?</dt>
+    <dd>
+        Use the slider on the left hand side to set the knob value or enter the value directly
+        in the text box next to "Knob value". The text boxes on the left now show how much
+        the speed and the duration of the cycle respectively affect the base value (the
+        "Sync" parameter).
+        <br />
+        <strong>Example</strong>: you want to know what the speed/duration scaling factor
+        is for the knob value "150". Set the knob value to "150". The "Speed scaling factor"
+        value is 3.375, that is, the frequency is actually 3.375 times faster than the "Sync"
+        value. Likewise, the duration of one LFO cycle is scaled by 0.296, ie. each LFO
+        cycle takes only 29.6% of the time of the base value.</dd>
+    <dt>Whats is the knob value for a given speed relative to the base value?</dt>
+    <dd>
+        Use the slider on the right side to set the "Speed scaling factor" value or enter
+        the value directly in the corresponding text box. The "Knob value" text box on the
+        left hand side now shows the value you need the "Rate" knob to.
+        <br />
+        <strong>Example</strong>: you want the LFO to go 50% faster than the "Sync" value.
+        Set "Speed scaling factor" to 1.5 (1.5 times faster than sync value). The "Knob
+        value" shows 114.471, so set the Rate knob to 114.47 to achieve a (roughly) 50%
+        speed up.</dd>
+    <dt>Whats is the knob value for a given duration relative to the base value?</dt>
+    <dd>
+        Use the slider on the right side to set the "Duration scaling factor" value or enter
+        the value directly in the corresponding text box. The "Knob value" text box on the
+        left hand side now shows the value you need to set the "Rate" knob to.
+        <br />
+        <strong>Example</strong>: you want the LFO to take 3/4 of the time of the sync value.
+        Set "Duration scaling factor" to 0.75. The "Knob value" shows 110.064, so set the
+        Rate knob to 110.064 to make one LFO cycle last roughly 3/4 of the time of the base
+        value.</dd>
+</dl>
+<h2>
+    The formula</h2>
+<p>
+    The relationship between the knob value and the actual speed scaling factor is as
+    follows:</p>
+<p>
+    <code>SpeedScale = (KnobValue/100) ^ 3 </code><em>(ie. the cube of a hundredth of the
+        knob value)</em></p>
+<p>
+    -- or respectively --</p>
+<p>
+    <code>KnobValue = 100 * SpeedScale ^ (1/3) </code><em>(ie. 100 times the cube root of
+        the speed scaling factor)</em></p>
+<p>
+    Where <code>KnobValue</code> is the value of the Rate knob and <code>SpeedScale</code>
+    is the scaling factor of the LFO frequency.</p>
+<p>
+    NB: <code>SpeedScale</code> can be replaced by <code>(1/DurationScale)</code> (where
+    <code>DurationScale</code> is the duration scaling factor applied to the duration
+    of the cycles of the LFO) if necessary.</p>
+<h2>
+    Credits and Licence</h2>
+<p>
+    This tool was originally developed by <a href="http://andreloker.de">Andre Loker</a>
+    and is provided as-is without any express or implied warranties. Use at own risk.
+    You may copy the code of this website and use it for your own purposes in its original
+    or in modified form. Attribution of the original author (Andre Loker) is highly
+    appreciated but not strictly necessary.
+</p>
+<div class="footnotes">
+    <p id="foot-1">
+        <sup>[1]</sup> We use the term "speed" for an LFO's frequency (cycles per second)
+        and the term "duration" for its period (duration of one cycle) in this text. Frequency
+        and period of a wave are closely related. The frequency is the inverse of the period
+        (and vice versa): if the frequency is F, the period is 1/F.
+    </p>
+</div>
